@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Wire</string>
+    <string name="login">LOGIN</string>
+    <string name="create_account">Create Account</string>
+    <string name="password_hint">Password</string>
+    <string name="user_hint">Email</string>
+    <string name="key_hint">Unique Key</string>
+    <string name="get_permission">Get Permission</string>
+    <string name="hide">Hide</string>
+</resources>
