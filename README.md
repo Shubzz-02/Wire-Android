@@ -29,3 +29,8 @@ Child android app
 
 3. Click Clone option
 ```
+
+##Screen-Shots
+
+![alt text](ScreenShot/Login.png "login")
+![alt text](ScreenShot/Permission.png "login
