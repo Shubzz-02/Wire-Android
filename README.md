@@ -33,4 +33,4 @@ Child android app
 ##Screen-Shots
 
 ![alt text](ScreenShot/Login.png "login")
-![alt text](ScreenShot/Permission.png "login
+![alt text](ScreenShot/Permission.png "login")
