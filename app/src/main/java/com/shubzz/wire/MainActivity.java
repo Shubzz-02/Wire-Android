@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -52,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_uq = "key";
     private static final String KEY_Longitude = "Longitude";
     private static final String KEY_Latitude = "Latitude";
-    private String update_location = "http://34.93.78.17/project/updateLocation.php";
+    FingerprintManagerCompat managerCompat;
+    private String update_location = "http://192.168.43.98/wire/updateLocation.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,9 +88,36 @@ public class MainActivity extends AppCompatActivity {
                 hide(v);
             }
         });
+
+//        TimerTask task = new TimerTask() {
+//            @Override
+//            public void run() {
+//                managerCompat = FingerprintManagerCompat.from(MainActivity.this);
+//                if (managerCompat.isHardwareDetected() && managerCompat.hasEnrolledFingerprints()) {
+//                    showFingerPrintDialog();
+//                } else {
+//                    Toast.makeText(getApplicationContext(), "Fingerprint not supported", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        };
+//        Timer timer = new Timer();
+//        timer.schedule(task, 0L, 20000L);
+        managerCompat = FingerprintManagerCompat.from(MainActivity.this);
+        if (managerCompat.isHardwareDetected() && managerCompat.hasEnrolledFingerprints()) {
+            showFingerPrintDialog();
+        } else {
+            Toast.makeText(getApplicationContext(), "Fingerprint not supported", Toast.LENGTH_SHORT).show();
+        }
         //getLastLocation();
     }
 
+    private void showFingerPrintDialog() {
+
+        FingerprintDialog fragment = new FingerprintDialog();
+        fragment.setContext(this);
+        fragment.show(getSupportFragmentManager(), "");
+
+    }
 
     @SuppressLint("MissingPermission")
     void getLastLocation() {
@@ -104,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                                 } else {
                                     latitude = String.valueOf(location.getLatitude());
                                     longitude = String.valueOf(location.getLongitude());
-                                    Toast.makeText(getApplicationContext(), latitude + " " + longitude, Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(getApplicationContext(), latitude + " " + longitude, Toast.LENGTH_LONG).show();
                                     //Log.d("Lat",latitude+" "+longitude);
                                     session.setLocation(longitude, latitude);
                                 }
@@ -151,11 +180,8 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private boolean checkPermissions() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        }
-        return false;
+        return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 
     private void requestPermissions() {

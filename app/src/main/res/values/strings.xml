@@ -7,4 +7,6 @@
     <string name="key_hint">Unique Key</string>
     <string name="get_permission">Get Permission</string>
     <string name="hide">Hide</string>
+    <string name="appwidget_text">Panic Button</string>
+    <string name="add_widget">Add widget</string>
 </resources>

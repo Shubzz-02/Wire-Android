@@ -23,6 +23,8 @@ import org.json.JSONObject;
 public class LoginActivity extends AppCompatActivity {
     private Button login;
     private EditText email, password, uq_key;
+
+
     private static final String KEY_STATUS = "status";
     private static final String KEY_MESSAGE = "message";
     private static final String KEY_USERNAME = "username";
@@ -30,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String KEY_FULL_NAME = "full_name";
     private static final String KEY_uq = "key";
     private static SessionHandler session;
-    private String login_url = "http://34.93.78.17/project/clogin.php";  // child app
+    private String login_url = "http://192.168.43.98/wire/clogin.php";  // child app
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -38,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         initGUI();
         session = new SessionHandler(getApplicationContext());
         if (session.isLoggedIn()) {
@@ -71,7 +74,10 @@ public class LoginActivity extends AppCompatActivity {
             }
 
         });
+
+
     }
+
 
     private void signUser(final String temail, String tpass, final String tkey) {
         JSONObject request = new JSONObject();
@@ -103,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("JSONERROR", error.getMessage().toString());
+                Log.d("JSONERROR", error.getMessage());
                 Toast.makeText(getApplicationContext(),
                         error.getMessage(), Toast.LENGTH_SHORT).show();
 
