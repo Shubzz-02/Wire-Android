@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private int PERMISSION_ID = 44;
     private FusedLocationProviderClient mFusedLocationClient;
     private String latitude = null, longitude = null;
-    private Button get_permission, hide;
+    private Button get_permission, hide, sos;
     private SessionHandler session;
     private EditText uq_key;
     private static final String KEY_STATUS = "status";
@@ -88,7 +89,25 @@ public class MainActivity extends AppCompatActivity {
                 hide(v);
             }
         });
+        sos = findViewById(R.id.Sos_call);
 
+        sos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:" + 112));//change the number.
+                if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(
+                            MainActivity.this,
+                            new String[]{Manifest.permission.CALL_PHONE},
+                            PERMISSION_ID
+                    );
+                    //Toast.makeText(MainActivity.this,"Please Give permission",Toast.LENGTH_LONG).show();
+                } else {
+                    startActivity(callIntent);
+                }
+            }
+        });
 //        TimerTask task = new TimerTask() {
 //            @Override
 //            public void run() {

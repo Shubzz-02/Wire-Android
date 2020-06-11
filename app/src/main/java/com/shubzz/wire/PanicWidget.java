@@ -1,9 +1,11 @@
 package com.shubzz.wire;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.RemoteViews;
 
 /**
  * Implementation of App Widget functionality.
@@ -13,28 +15,17 @@ public class PanicWidget extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
-//        Intent intent = new Intent(context, MainActivity.class);
-//        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-//
-//        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.panic_widget);
-//
-//        remoteViews.setOnClickPendingIntent(R.id.SOS_image, pendingIntent);
-//
-//        appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
-        final Intent i = new Intent();
-        i.putExtra("data", "Some data");
-        i.setAction("com.shubzz.wireparent");
-        i.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-        context.getApplicationContext().sendBroadcast(i);
 
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.panic_widget);
+//        ComponentName watchWidget = new ComponentName(context,PanicWidget.class);
+        Intent intent = new Intent(context, ClickIntentService.class);
+        intent.setAction(ClickIntentService.ACTION_CLICK);
+        PendingIntent pendingIntent = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
-//        CharSequence widgetText = context.getString(R.string.appwidget_text);
-//        // Construct the RemoteViews object
-//        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.panic_widget);
-//        //views.setTextViewText(R.id.appwidget_text, widgetText);
-//
-//        // Instruct the widget manager to update the widget
-//        appWidgetManager.updateAppWidget(appWidgetId, views);
+        views.setOnClickPendingIntent(R.id.SOS_image, pendingIntent);
+
+        appWidgetManager.updateAppWidget(appWidgetId, views);
+
     }
 
     @Override

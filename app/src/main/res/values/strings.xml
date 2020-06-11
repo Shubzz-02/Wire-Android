@@ -9,4 +9,5 @@
     <string name="hide">Hide</string>
     <string name="appwidget_text">Panic Button</string>
     <string name="add_widget">Add widget</string>
+    <string name="emergency">Emergency</string>
 </resources>

@@ -19,7 +19,7 @@ public class UnhideBroadcastReceiver extends BroadcastReceiver {
             intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent2);
         }
-        Log.d(UnhideBroadcastReceiver.class.getSimpleName(), phoneNumber);
+        Log.d("Broadcast ", phoneNumber);
     }
 
     private void unhideApp(Context context){
